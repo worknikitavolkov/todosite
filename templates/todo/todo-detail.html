@@ -1,0 +1,34 @@
+{% extends '_partials/base.html' %}
+
+{% block title %}
+Todo - {{todo.title}}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="ui header">Todo Detail</h1>
+
+  <div class="ui card">
+    <div class="content">
+      <div class="header">{{todo.title}}</div>
+      <div class="meta">{{todo.created_at}}</div>
+      <div class="description">{{todo.description}}</div>
+    </div>
+    <div class="extra content">
+      {% if todo.is_completed %}
+      <p>
+        <i class="check icon green"></i>
+        Completed at {{todo.updated_at}}
+      </p>
+      {% else %}
+      <p>Not yet completed</p>
+      {% endif %}
+      <a href={% url 'todo-edit' todo.pk %} class="ui button primary">Edit</a>
+      <form style = "display: inline" method="POST" action = {% url 'todo-delete' todo.pk %}>
+        {% csrf_token %}
+        <button type="submit" class="ui button red">Delete todo</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}
